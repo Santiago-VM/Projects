@@ -1,0 +1,100 @@
+/* Just the code and images of a project i've done, it's rather simple but it would be great if someone someday could make use of it.
+Developed on C# for the [MeArm Maker Kit](https://shop.mearm.com/products/mearm-kit-for-micro-bit-nuka-cola-blue), 
+Works as an automatic arm that picks up an item, rotates and drops in on the new position, 
+the code is there to edit its angles based on your servos, which movements are written as blocks of commands so that you can program your arm to make the movements you want as long as they are defined there.
+*/
+
+#include <Servo.h> //library for the motors
+
+
+// We declare each motors variable
+Servo servoMotor1; // base of the arm
+Servo servoMotor2; // left motor that handles height
+Servo servoMotor3; // right motor thaat handles the extension of the arm
+Servo servoMotor4; // top motor that opens and closes the clamp
+
+// We stablish an angle for each motor
+int ang1;
+int ang2;
+int ang3;
+int ang4;
+
+
+void setup() { //Here we decide what pin from the arduino board each motor will be connected to (you can change them to your liking)
+  servoMotor1.attach(1);
+  servoMotor2.attach(2);
+  servoMotor3.attach(3);
+  servoMotor4.attach(4);
+ 
+  // Well set the arm on a starting position (the angles depend on your motors, you should measure each starting and ending angle for all motors)
+  servoMotor1.write(0); // Should make the arm be in the same direction as the base
+  servoMotor2.write(0); // should make the arm stand almost straight up
+  servoMotor3.write(0); // should have the arm withdrawn, not extended
+  servoMotor4.write(0); // should make the clamp open
+  delay(1000); // We'll give the arm 1 second to get to those positions
+}
+
+
+void loop() { // You can use any of the next for conditions to make a movement in the arm (make sure to change every angle to match your motors)
+  //Rotate the arm
+    for (ang1 = 0; ang1 < 90; ang1++) {
+    servoMotor1.write(ang1);
+    delay(20); // this will define the time that the motor will have to make the movement, values too high or low might cause troubles
+  }
+  delay(1000); // the time between each movement (can be changed, but values too low might cause troubles)
+
+    // Make the arm rotate back to its starting angle
+    for (ang1 = 90; ang1 > 0; ang1--) {
+    servoMotor1.write(ang1);
+    delay(20);
+  }
+  delay(1000);
+
+    // Make the arms main body go down
+  for (ang2 = 0; ang2 < 90; ang2++) {
+    servoMotor2.write(ang2);
+    delay(20);
+  }
+  delay(1000);
+
+    // Make the arm "stand striahgt up" again
+  for (ang2 = 90; ang2 > 0; ang2--) {
+    servoMotor2.write(ang2);
+    delay(20);
+  }
+  delay(1000);
+
+  // Extend the arm
+    for (ang3 = 0; ang3 < 90; ang3++) {
+    servoMotor3.write(ang3);
+    delay(20);
+  }
+  delay(1000);
+
+  // Withdraw the arm
+    for (ang3 = 90; ang3 > 0; ang3--) {
+    servoMotor3.write(ang3);
+    delay(20);
+  }
+  delay(1000);
+
+  // Close the clamp
+    for (ang4 = 0; ang4 < 90; ang4++) {
+    servoMotor4.write(ang4);
+    delay(20);
+  }
+  delay(1000);
+
+  // Open the clamp
+    for (ang4 = 90; ang4 > 0; ang4--) {
+    servoMotor4.write(ang4);
+    delay(20);
+  }
+  delay(1000);
+
+}
+
+
+/* Code was verified on Arduino IDE, and includes one library. [An example of the use of this code with an arm i developed on my own.](https://imgur.com/a/CqjGrAA)
+Im also open to any criticism, recommendation, or feedback of any sort is appreciated
+*/
